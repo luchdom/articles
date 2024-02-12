@@ -1,0 +1,23 @@
+version: '3.4'
+
+services:
+  sql-server:
+    image: mcr.microsoft.com/mssql/server:2022-latest
+    ports:
+      - "1433:1433"
+    environment:
+      - ACCEPT_EULA=Y
+      - MSSQL_SA_PASSWORD=SystemAdmin@#$123
+
+  articles.api:
+    image: ${DOCKER_REGISTRY-}articlesapi
+    build:
+      context: .
+      dockerfile: src/Articles/Articles.Api/Dockerfile
+
+  users.api:
+    image: ${DOCKER_REGISTRY-}usersapi
+    build:
+      context: .
+      dockerfile: src/Users/Users.Api/Dockerfile
+
